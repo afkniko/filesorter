@@ -186,18 +186,16 @@ class Filemover:
         self.parent_dir = directory
         self.checked_items = checked_items
         
-        print(self.parent_dir)
-        print(self.checked_items)
-        
+
         self.dir_items = os.listdir(self.parent_dir)
         
-        print(self.dir_items)
+        #print(self.dir_items)
         # Scan extensions keys and values          
         for item in self.checked_items:
             for key, value in self.extensions.items():
                 # Check which extensions to look for
                 if key == item:
-                    print(key)
+
                 # Scan files in directory
                     for dir_item in self.dir_items:
                         print(dir_item)
@@ -206,8 +204,7 @@ class Filemover:
                             if dir_item.endswith(v): 
                                 source = os.path.join(self.parent_dir, dir_item).replace("/","\\")
                                 destination = os.path.join(self.parent_dir, key).replace("/","\\")
-                                print(source)
-                                print(destination)
+
                                 # If extension folder doesn't exist, create folder and move file to it
                                 if not os.path.exists(destination):
                                     os.makedirs(destination)
