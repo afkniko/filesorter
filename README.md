@@ -3,7 +3,7 @@ Sort files based on the extension
 
 clone repository: 
 
-    git clonegit@github.com:afkniko/filesorter.git
+    git clone git@github.com:afkniko/filesorter.git
 
 Install PyQt:
 
