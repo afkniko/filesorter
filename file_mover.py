@@ -1,6 +1,5 @@
 import shutil
 import os
-
 class Filemover:
 
     def __init__(self):
@@ -42,7 +41,7 @@ class Filemover:
 
             "data" : [
                 ".csv", # Comma separated value file
-                " .dat", # Data file
+                ".dat", # Data file
                 ".db", # Database file
                 ".dbf", # Database file
                 ".log", # Log file
@@ -110,7 +109,6 @@ class Filemover:
                 ".js", #- JavaScript file
                 ".jsp", #- Java Server Page file
                 ".part", #- Partially downloaded file
-                ".php", #- PHP file
                 ".rss", #- RSS file
                 ".xhtml" #- XHTML file
                 ],
@@ -177,40 +175,42 @@ class Filemover:
                 ]
         }
 
-        #print(self.dir_items)
-        #print(self.parent_dir)
-        
         # Set directory where to sort files
     def scan_files(self, directory, checked_items):
         
         self.parent_dir = directory
         self.checked_items = checked_items
-        
-
+        self.count = 0
+        # Items in directory
         self.dir_items = os.listdir(self.parent_dir)
-        
-        #print(self.dir_items)
+        try:
         # Scan extensions keys and values          
-        for item in self.checked_items:
-            for key, value in self.extensions.items():
-                # Check which extensions to look for
-                if key == item:
+            for item in self.checked_items:
+                for key, value in self.extensions.items():
+                    # Check which extensions to look for
+                    if key == item:
 
-                # Scan files in directory
-                    for dir_item in self.dir_items:
-                        print(dir_item)
-                        # Compare directory file extension to each value in dictionary
-                        for v in value:
-                            if dir_item.endswith(v): 
-                                source = os.path.join(self.parent_dir, dir_item).replace("/","\\")
-                                destination = os.path.join(self.parent_dir, key).replace("/","\\")
-
-                                # If extension folder doesn't exist, create folder and move file to it
-                                if not os.path.exists(destination):
-                                    os.makedirs(destination)
-                                    shutil.move(source , destination)
+                    # Scan files in directory
+                        for dir_item in self.dir_items:
+                            # Compare directory file extension to each value in dictionary
+                            for v in value:
+                                if dir_item.endswith(v): 
+                                    source = os.path.join(self.parent_dir, dir_item).replace("/","\\")
+                                    destination = os.path.join(self.parent_dir, key).replace("/","\\")
                                     
-                                else:
-                                    # If extension folder exists and move file to it
-                                    shutil.move(source , destination)
+                                    # If extension folder doesn't exist, create folder and move file to it
+                                    if not os.path.exists(destination):
+                                        os.makedirs(destination)
+                                        shutil.move(source , destination)
+                                        self.count += 1
+                                    else:
+                                        # If extension folder exists and move file to it
+                                        shutil.move(source , destination)
+                                        self.count += 1
+            # Send count of sorted items     
+            return self.count                    
+            
+        except FileNotFoundError as err:
+            return type(err)      
+        
         
