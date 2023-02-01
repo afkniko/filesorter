@@ -195,6 +195,8 @@ class Filemover:
                             # Compare directory file extension to each value in dictionary
                             for v in value:
                                 if dir_item.endswith(v): 
+                                    
+                                    # Generate source path and destination path
                                     source = os.path.join(self.parent_dir, dir_item).replace("/","\\")
                                     destination = os.path.join(self.parent_dir, key).replace("/","\\")
                                     
